@@ -4,7 +4,7 @@ import * as ws from 'ws';
 
 const app = express();
 exporessWS(app);
-const port = process.env.PORT || 3030;
+const port = 3030;
 
 const clients: ws[] = [];
 
@@ -22,8 +22,6 @@ const clients: ws[] = [];
   client.on('close', () => {
     console.log('I lost a client');
   });
-
-
 });
 
 app.listen(port, () => console.log(`Hello app listening on port ${port}!`));
