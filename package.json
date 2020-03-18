@@ -1,0 +1,30 @@
+{
+  "name": "location-sharing-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./dist/server.js",
+    "webpack": "webpack --watch --mode development",
+    "build": "webpack --mode production",
+    "postinstall": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": "12.6.0"
+  },
+  "devDependencies": {
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.3",
+    "@types/express-ws": "^3.0.0",
+    "express": "^4.17.1",
+    "express-ws": "^4.0.0"
+  }
+}
