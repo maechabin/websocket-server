@@ -4,7 +4,7 @@ import * as ws from 'ws';
 
 const app = express();
 exporessWS(app);
-const port = 3030;
+const port = process.env.PORT || 3030;
 
 const clients: ws[] = [];
 
