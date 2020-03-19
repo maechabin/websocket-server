@@ -1,6 +1,9 @@
 import * as express from 'express';
 import * as exporessWS from 'express-ws';
 import * as ws from 'ws';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 exporessWS(app);
