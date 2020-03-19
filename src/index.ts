@@ -1,23 +1,16 @@
 import * as express from 'express';
-import * as exporessWS from 'express-ws';
-import * as ws from 'ws';
+import * as expressWS from 'express-ws';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-const app = express();
-exporessWS(app);
+const ews = expressWS(express());
 const port = process.env.PORT || 3001;
 
-const clients: ws[] = [];
-
-// @ts-ignore: ws injected via express-ws
-(app as exporessWS.Application).ws('/:room', (client, req) => {
-  clients.push(client);
-
+ews.app.ws('/:room', (client, req) => {
   client.on('message', message => {
     console.log('Received: ' + message);
-    clients.forEach(client => {
+    ews.getWss().clients.forEach(client => {
       client.send(message);
     });
   });
@@ -27,4 +20,4 @@ const clients: ws[] = [];
   });
 });
 
-app.listen(port, () => console.log(`Hello app listening on port ${port}!`));
+ews.app.listen(port, () => console.log(`Hello app listening on port ${port}!`));
