@@ -7,7 +7,7 @@ dotenv.config();
 
 const app = express();
 exporessWS(app);
-const port = 443;
+const port = process.env.PORT || 3001;
 
 const clients: ws[] = [];
 
