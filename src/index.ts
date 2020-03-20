@@ -1,23 +1,31 @@
 import * as express from 'express';
-import * as expressWS from 'express-ws';
+import * as ws from 'ws';
+import * as http from 'http';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-const ews = expressWS(express());
-const port = process.env.PORT || 3001;
+const app = express();
+const port = Number(process.env.PORT) || 3001;
+const server = http.createServer(app);
 
-ews.app.ws('/:room', (client, req) => {
-  client.on('message', message => {
-    console.log('Received: ' + message);
-    ews.getWss().clients.forEach(client => {
-      client.send(message);
+app.get('/:channel', (req, res) => {
+  const wss = new ws.Server({ server, path: `/${req.params.channel}` });
+
+  wss.on('connection', ws => {
+    ws.on('message', message => {
+      console.log('Received: ' + message);
+      wss.clients.forEach(client => {
+        client.send(message);
+      });
     });
-  });
 
-  client.on('close', () => {
-    console.log('I lost a client');
+    ws.on('close', () => {
+      console.log('I lost a client');
+    });
   });
 });
 
-ews.app.listen(port, () => console.log(`Hello app listening on port ${port}!`));
+server.listen(
+  port, () => console.log(`Hello app listening on port ${port}!`)
+);
